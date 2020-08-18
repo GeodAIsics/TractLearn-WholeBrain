@@ -1,6 +1,6 @@
 # TractLearn
 
-TrackLearn is a software to permit brain fascicules analysis. 
+TractLearn is a software which aims to increase the sensitivity in detecting voxels abnormalities using Diffusion-Weighting MRI
 
 ## Step 1: Registration of the subjects
 
