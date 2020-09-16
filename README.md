@@ -9,11 +9,15 @@ Here the TractLearn use implies a first step of major brain bundles segmentation
 
 ## Step 1: Subjects coregistration
 
-As TractLearn requires an excellent matching between subjects, the first steps imply non linear coregistration in a common template space. Here deformations are estimated between each subject Fiber Orientation Distribution (FOD) image  and the template.
+As TractLearn requires an excellent matching between subjects, the first steps imply non linear coregistration in a common template space. 
+Here we assume that you have already created a template using for example population_template coming from MRtrix.
+We provide the python code to coregister each subject Fiber Orientation Distribution (FOD) into the template space, saving in the same time the warp files (deformation fields) into a folder named warped_template. All the registered FODs will be saved into a folder named transformed_template.
 
-## Step 2: Inversion of the transformation for tck files registration
+Please note that the folders warped_template and transformed_template need to be created before launching this python script (at the same level). The working directory should also contain the template file, here named template_FOD.nii.gz.
 
-All the transformations of the previous step are inverted.
+## Step 2: Track files registration in the common template space
+
+At this step, you need the inverse of the transformation required for images 
 
 ## Step 3: Transformation application for all TractSeg bundles
 
