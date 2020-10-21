@@ -14,8 +14,9 @@ Here we assume that you have already created a template using for example popula
 We provide the python code to coregister each subject Fiber Orientation Distribution (FOD) into the template space, saving in the same time the warp files (deformation fields) into a folder named warped_template. All the registered FODs will be saved into a folder named transformed_template.
 
 Please note that the folders warped_template and transformed_template need to be created before launching this python script (at the same level). The working directory should also contain the template file, here named template_FOD.nii.gz.
-
+```
 python 2_Register_fod2template_nomask.py
+```
 
 ## Step 2: Track files registration in the common template space
 
