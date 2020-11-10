@@ -62,13 +62,29 @@ Keep in this mind for this script to add te working directory at the end, like t
 
 python 5_FA.py ./MyData/
 
-The following script proposes to automatically convert track files into images files for these coefficients using tckmap and afdconnectivity from MRtrix 
+The following script proposes to automatically convert track files into images files for TD-FOD, TW-FA and AFD using tckmap and afdconnectivity:
 
 ```
-python 5_Register_FA.py
+python 6_Register_TWI_FOD.py
 ```
 
-## Step 5: Mask calculation for all the subjects
+As the ouput will generate a high number of files, we propose to postprocess indiviudals by group of 10 using this nomenclature:
+
+python 6_Register_TWI_FOD.py 0
+
+For processing Folder 1 to Folder 10 (alphabetical order!) 
+
+python 6_Register_TWI_FOD.py 1
+
+For processing Folder 11 to Folder 20
+
+In case you have for example 35 subjects to postprocess, you need to launch respectively:
+
+python 6_Register_TWI_FOD.py 0
+python 6_Register_TWI_FOD.py 1
+python 6_Register_TWI_FOD.py 2
+
+## Invisible step: Mask calculation for all the subjects
 
 For each bundle, 80% of maximum of the TDI intensity is considered to perform a subject mask. The reason was given in the manuscript: Indeed, while the coregistration based on FOD symmetric diffeomorphic has allow to match major brain bundles, we have noticed that cortical variability made more difficult a perfect matching for the entire bundle. Absence of this step could potentially lead to false positive lesions on the bundles boundaries. 
 
@@ -76,9 +92,7 @@ In addition, as TractSeg tends to produce bundle overlaying (i.e some boundaries
 
 The intersection of all the masks corresponds to the mask of analysis.
 
-```
-python 5_Register_FA.py
-```
+## Step 5: Obtaining your analysis in a Riemaniann framework!
 
 At this step, you have to make an important choice: you can obtain from TractLearn either Z Score analysis in you want to compare ONE individual versus a group fo controls or t tests analysis if you want to compare two groups together. In both cases you will beneficiate from the high sensitivity of TractLearn to detect voxel abnormalities and its capability to limit false positive findings by taken into account the variability of your control group.
 
@@ -92,9 +106,19 @@ Obtaining separate analysis for each individual can for example help to identify
 
 The second case (t tests) is generally useful when you want to test a pathophysiological hypothesis at the group level with homogeneous population
 
-## Step 6: Estimate z-score maps (group versus individuals)
+## First possibility: Estimate z-score maps (group versus individuals)
+
+```
+python 7_z_score_calculation.py
+```
+
+## Second possibility: Estimate t-test maps (group vs group studies)
+
+```
+python 8_t_test_calculation.py
+```
+
+## Step 6: Bonferroni correction for multiple comparison
 
 
 
-
-## Step 7: Estimate t-test maps (group vs group studies)
