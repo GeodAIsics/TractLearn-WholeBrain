@@ -36,11 +36,10 @@ python 3_Invert_warp.py
 
 ## Step 3: Transformation application for all TractSeg bundles
 
-The next step is to use tcktransform command (always coming from MRtrix) on all tck files using:
+The next step is to use tcktransform command (always coming from MRtrix) on all tck files to coregister all the tck files into a common template space using:
 ```
 python 4_Register_track.py
 ```
-
 Note that you need to add the working directory at the end of the line, for example:
 
 python 4_Register_track.py ./MyData/
@@ -48,10 +47,20 @@ python 4_Register_track.py ./MyData/
 ## Step 4: Estimation of the different scalar coefficients in the template space
 
 In the initial TractLearn paper, we have proposed to extract 4 biomarkers from each patient bundle:
+
 1/The track-weighted contrast based on FOD amplitude (TW-FOD)
 2/The track-weighted contrast based on FA amplitude (TW-FA)
 3/Fractional Anisotropy (FA)
 4/Apparent Fiber Density (AFD) coefficient) 
+
+FA analysis does firstly require to coregister all individual FA maps (named FA_MNI.nii.gz as it is assumed to be in the MNI space for TractSeg)
+
+```
+python 5_Register_FA.py
+```
+Keep in this mind for this script to add te working directory at the end, like that:
+
+python 5_FA.py ./MyData/
 
 The following script proposes to automatically convert track files into images files for these coefficients using tckmap and afdconnectivity from MRtrix 
 
