@@ -1,6 +1,8 @@
-# TractLearn: The Manifold Learning toolbox for precision medicine
+# TractLearn: The Manifold Learning toolbox for precision medicine. Whole Brain version.
 
 TractLearn is unified statistical framework for Diffusion-weighted MRI quantitative analyses by using geodesic learning as a data-driven learning task. It aims to increase the sensitivity in detecting voxels abnormalities in case-controlled and/or longitudinal medical studies. 
+
+https://geodaisics.files.wordpress.com/2020/11/tractlearnexample.png
 
 TractLearn can detect global variation of voxels quantitative values, which means that all the voxels interaction in a brain bundle are considered rather than analyzing each voxel independently. More details can be found here: https://www.medrxiv.org/content/10.1101/2020.05.27.20113027v1
 
