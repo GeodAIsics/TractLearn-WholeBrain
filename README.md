@@ -4,22 +4,19 @@ TractLearn is an unified statistical framework for Diffusion-weighted MRI quanti
 
 ![alt text](https://geodaisics.files.wordpress.com/2020/11/tractlearnexample.png "Example of TractLearn application to localize brain abnormality in a trauma patient") 
 
-TractLearn can detect global variation of voxels quantitative values, which means that all the voxels interaction in a brain bundle are considered rather than analyzing each voxel independently. More details can be found here: https://www.medrxiv.org/content/10.1101/2020.05.27.20113027v1
+TractLearn can detect global variation of voxels quantitative values, which means that all the voxels interaction in a brain bundle are considered rather than analyzing each voxel independently. The second advantage over usual voxelwise analysis is to take into account healthy volunteers variability as reference rather than using classical Euclidean mean. More details can be found here: https://www.medrxiv.org/content/10.1101/2020.05.27.20113027v1
 
-While the code is mainly based on Python librairies, first steps can also be computed using Shell command lines. We are then providing both Python and Unix scripts.
-As the prior paper use TractLearn based on a first step of major brain bundles segmentation using TractSeg, we will provide scripts starting from typical outputs of TractSeg, ie. tck files generation using Deep Learning. For more information about TractSeg please refer to:
+While the code is mainly based on Python librairies, first steps can also be computed using Shell. We are then providing both Python and Shell scripts coming from MRtrix3 (https://www.mrtrix.org/). Here we propose to apply TractLearn based on a first step of brain bundles segmentation with TractSeg, a Deep Learning open source tool. For more information about TractSeg please refer to: https://github.com/MIC-DKFZ/TractSeg. We will then provide scripts starting from typical outputs of TractSeg, ie. tck files from 72 brain bundles (though the pipeline also worked in case of incomplete execution of TractSeg, eg. with only 60 brain bundles). 
 
-https://github.com/MIC-DKFZ/TractSeg
-
-It is worthwhile to keep in mind that TractLearn can also be relevant on a unique anatomical region, for example after manual extraction using ROIs. In this case, you can start directly with the Step 4 in the template space.
+It is worthwhile to keep in mind that TractLearn can also be relevant on a unique anatomical region (either in the brain or not), for example after manual extraction using ROIs. The pipeline for Single Structure management will be soon published.
 
 ## Step 1: Subjects coregistration
 
 As TractLearn requires an excellent matching between subjects, the first steps imply non-linear coregistration in a common template space. 
 Here we assume that you have already created a template using for example population_template coming from MRtrix (https://www.mrtrix.org/).
-We provide the python code to coregister each subject Fiber Orientation Distribution (FOD) maps into the template space, saving in the same time the warp files (deformation fields) into a folder named warped_template. All the registered FODs will be saved into a folder named transformed_template.
+We provide the python code to coregister each subject Fiber Orientation Distribution (FOD) maps into the template space, saving in the same time the warp files (deformation fields) into a folder named warped_template. All the registered FOD maps need to be saved into a folder named transformed_template.
 
-Please note that the folders warped_template and transformed_template need to be created before launching this python script (the folders should be created in the same directory than the script). The working directory should also contain the template file, here named template_FOD.nii.gz.
+Please note that the folders warped_template and transformed_template need to be created before launching this python script (the folders should be created in the same directory than the script file). The working directory should also contain the template file, here named template_FOD.nii.gz.
 
 You need to launch:
 ```
@@ -28,7 +25,7 @@ python 2_Register_fod2template_nomask.py
 
 ## Step 2: Track files registration in the common template space
 
-At this step, you need the inverse of the transformation required for images for track files (tck) registration. The following python script will automatically invert all transformations using warpconvert and warpinvert (MRtrix commandlines). Keep in mind that you need to have already created two folders: /transformed_template including the coregistered WM files and /warped_template including the warps files/
+At this step, you need the inverse of the transformation required for images for track files (tck) registration. The following python script will automatically invert all transformations using warpconvert and warpinvert (MRtrix commands). You need to have already created two folders: /transformed_template including the coregistered WM files and /warped_template including the warps files.
 
 Just launch:
 
@@ -64,13 +61,13 @@ Keep in this mind for this script to add te working directory at the end, like t
 
 python 5_FA.py ./MyData/
 
-The following script proposes to automatically convert track files into images files for TD-FOD, TW-FA and AFD using tckmap and afdconnectivity:
+The following script proposes to automatically convert track files into images files for TW-FOD, TW-FA and AFD using tckmap and afdconnectivity:
 
 ```
 python 6_Register_TWI_FOD.py
 ```
 
-As the ouput will generate a high number of files, we propose to postprocess indiviudals by group of 10 using this nomenclature:
+As the ouput will generate a high number of files, we propose to postprocess individuals by group of 10 using this nomenclature:
 
 python 6_Register_TWI_FOD.py 0
 
@@ -88,15 +85,15 @@ python 6_Register_TWI_FOD.py 2
 
 ## Invisible step: Mask calculation for all the subjects
 
-For each bundle, 80% of maximum of the TDI intensity is considered to perform a subject mask. The reason was given in the manuscript: Indeed, while the coregistration based on FOD symmetric diffeomorphic has allow to match major brain bundles, we have noticed that cortical variability made more difficult a perfect matching for the entire bundle. Absence of this step could potentially lead to false positive lesions on the bundles boundaries. 
+For each bundle, 80% of maximum of the Track Density Imaging intensity is considered to perform a subject mask. The reason was given in the manuscript: Indeed, while the coregistration based on FOD symmetric diffeomorphic has allow to match major brain bundles, we have noticed that cortical variability made more difficult a perfect matching for the entire bundle. Absence of this step could potentially lead to false positive lesions on the bundles boundaries. 
 
-In addition, as TractSeg tends to produce bundle overlaying (i.e some boundaries voxels can be linked to two different bundles), using a thresholding has allowed to precisely locate abnormalities.
+In addition, as TractSeg tends to produce bundle overlaying (i.e some boundaries voxels can be linked to two different brain bundles), using a thresholding has allowed to precisely locate abnormalities.
 
-The intersection of all the masks corresponds to the mask of analysis.
+The intersection of all individual masks corresponds to the mask of analysis.
 
 ## Step 5: Obtaining your analysis in a Riemaniann framework!
 
-At this step, you have to make an important choice: you can obtain from TractLearn either Z Score analysis in you want to compare ONE individual versus a group fo controls or t tests analysis if you want to compare two groups together. In both cases you will beneficiate from the high sensitivity of TractLearn to detect voxel abnormalities and its capability to limit false positive findings by taken into account the variability of your control group.
+At this step, you have to make an important choice: you can obtain from TractLearn either Z Score analysis in you want to compare ONE individual versus a group of controls or t-tests analysis if you want to compare two groups together. In both cases you will beneficiate from the high sensitivity of TractLearn to detect voxel abnormalities and its capability to limit false positive findings by taken into account the variability of your control group.
 
 The first case (Z score) appears particularly relevant when:
 
@@ -106,9 +103,9 @@ The first case (Z score) appears particularly relevant when:
 
 Obtaining separate analysis for each individual can for example help to identify imaging profile, longitudinal changes during therapy...
 
-The second case (t tests) is generally useful when you want to test a pathophysiological hypothesis at the group level with homogeneous population
+The second case (t-tests) is generally useful when you want to test a pathophysiological hypothesis at the group level with homogeneous population
 
-## First possibility: Estimate z-score maps (group versus individuals)
+## First possibility: Estimate z-score maps (individual vs group)
 
 ```
 python 7_z_score_calculation.py
@@ -122,5 +119,6 @@ python 8_t_test_calculation.py
 
 ## Step 6: Bonferroni correction for multiple comparison
 
+## Step 7: Radar plots vizualisation
 
 
