@@ -41,6 +41,9 @@ for track in Track_name:
     Data1 = []
     for i in Ima1:
         Data1.append(nib.load(i).get_data()[ind_mean])
+    if len(Data1) == 0:
+        print(track + 'is empty for control group')
+        continue
     Data1 = np.array(Data1)
 
     #Load patient
@@ -53,6 +56,10 @@ for track in Track_name:
     Data_pat = []
     for i in Ima_pat:
         Data_pat.append(nib.load(i).get_data()[ind_mean])
+    
+    if len(Data_pat) == 0:
+        print(track + 'is empty for patient group')
+        continue
     Data_Pat = np.array(Data_pat)
 
     print("Start the Leave One Out procedure")
