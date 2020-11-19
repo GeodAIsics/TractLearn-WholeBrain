@@ -4,7 +4,11 @@ from glob import glob
 from subprocess import call
 import sys
 
-file_name = glob("transformed_template/*.mif.gz")
+if len(sys.argv) == 4:
+	file_name = glob("transformed_template/"+sys.argv[-2]+"*.mif.gz")
+else:
+	file_name = glob("transformed_template/*.mif.gz")
+	
 #print(file_name)
 file_name.sort()
 print(file_name)
