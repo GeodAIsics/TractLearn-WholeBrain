@@ -23,7 +23,7 @@ The group directory needs to contain all your subjects as a collection of indivi
 Each folder has to include the directory tractseg_output/TOM_tracking + FOD maps (same name for all FOD maps without prefix identification).
 
 ```
-python 2_Register_fod2template_nomask.py ./GroupDirectory/ FOD_image_Name
+python Register_fod2template.py ./GroupDirectory/ FOD_image_Name
 ```
 You need to add the subjects directory at the end of the line + the FOD image Name (eg. wmfod.mif)
 
@@ -39,14 +39,14 @@ The following python script will automatically invert all transformations using 
 Just launch:
 
 ```
-python 3_Invert_warp.py
+python Invert_warp.py
 ```
 
 ## Step 3: Transformation application for all TractSeg bundles
 
 The next step is to use tcktransform command (always coming from MRtrix) on all tck files to coregister all the tck files into a common template space. Note that you need to add the working directory at the end of the line, for example:
 ```
-python 4_Register_track.py ./GroupDirectory/
+python Register_track.py ./GroupDirectory/
 ```
 
 ## Step 4: Estimation of the different scalar coefficients in the template space
@@ -61,30 +61,40 @@ In the initial TractLearn paper, we have proposed to extract 4 biomarkers from e
 FA analysis does firstly require to coregister all individual FA maps (named FA_MNI.nii.gz as it is assumed to be in the MNI space for TractSeg)
 
 ```
-python 5_Register_FA.py ./GroupDirectory/
+python Register_FA.py ./GroupDirectory/
 ```
 
 The following script proposes to automatically convert track files into images files for TW-FOD, TW-FA and AFD using tckmap and afdconnectivity:
 
 ```
-python 6_Register_TWI_FOD.py
+python Register_TWI_FOD.py
 ```
 
 As the ouput will generate a high number of files, we propose to postprocess individuals by group of 10 using this nomenclature:
 
-python 6_Register_TWI_FOD.py 0
+```
+python Register_TWI_FOD.py 0
+```
 
 For processing Folder 1 to Folder 10 (alphabetical order!) 
 
-python 6_Register_TWI_FOD.py 1
+```
+python Register_TWI_FOD.py 1
+```
 
 For processing Folder 11 to Folder 20
 
 In case you have for example 25 subjects to postprocess, you need to launch respectively:
 
-python 6_Register_TWI_FOD.py 0
-python 6_Register_TWI_FOD.py 1
-python 6_Register_TWI_FOD.py 2
+```
+python Register_TWI_FOD.py 0
+```
+```
+python Register_TWI_FOD.py 1
+```
+```
+python Register_TWI_FOD.py 2
+```
 
 ## Invisible step: Mask calculation for all the subjects
 
@@ -111,17 +121,20 @@ The second case (t-tests) is generally useful when you want to test a pathophysi
 ## First possibility: Estimate z-score maps (individual vs group)
 
 ```
-python 7_z_score_calculation.py
+python z_score_calculation.py
 ```
 
 ## Second possibility: Estimate t-test maps (group vs group studies)
 
 ```
-python 8_t_test_calculation.py
+python t_test_calculation.py
 ```
 
-## Step 6: Bonferroni correction for multiple comparison
+## Step 6: Bonferroni correction for multiple comparison and radar plots generation
 
-## Step 7: Radar plots vizualisation
+```
+python Bonferroni_RadarPlots.py
+```
+
 
 
