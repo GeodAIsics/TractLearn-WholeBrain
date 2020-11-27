@@ -6,7 +6,7 @@ TractLearn is an unified statistical framework for Diffusion-weighted MRI quanti
 
 TractLearn can detect global variation of voxels quantitative values, which means that all the voxels interaction in a brain bundle are considered rather than analyzing each voxel independently. The second advantage over usual voxelwise analysis is to take into account healthy volunteers variability as reference rather than using classical Euclidean mean. More details can be found here: https://www.medrxiv.org/content/10.1101/2020.05.27.20113027v1
 
-While the code is mainly based on Python librairies, first steps can also be computed using Shell. We are then providing both Python and Shell scripts coming from MRtrix3 (https://www.mrtrix.org/). Here we propose to apply TractLearn based on a first step of brain bundles segmentation with TractSeg, a Deep Learning open source tool. For more information about TractSeg please refer to: https://github.com/MIC-DKFZ/TractSeg. We will then provide scripts starting from typical outputs of TractSeg, ie. tck files from 72 brain bundles (though the pipeline also worked in case of incomplete execution of TractSeg, eg. with only 60 brain bundles). 
+While the code is mainly based on Python librairies, first steps can also be computed using Shell. We are then providing both Python and Shell scripts coming from MRtrix3 (https://www.mrtrix.org/). Here we propose to apply TractLearn based on a first step of brain bundles segmentation using TractSeg, a Deep Learning-based open source tool. For more information about TractSeg please refer to: https://github.com/MIC-DKFZ/TractSeg. We will then provide scripts starting from typical outputs of TractSeg, ie. tck files from 72 brain bundles, as stored in tractseg_output/TOM_tracking (though the pipeline also worked in case of incomplete execution of TractSeg, eg. with only 60 brain bundles). 
 
 It is worthwhile to keep in mind that TractLearn can also be relevant on a unique anatomical region (either in the brain or not), for example after manual extraction using ROIs. The pipeline for Single Structure management will be soon published.
 
@@ -14,18 +14,27 @@ It is worthwhile to keep in mind that TractLearn can also be relevant on a uniqu
 
 As TractLearn requires an excellent matching between subjects, the first steps imply non-linear coregistration in a common template space. 
 Here we assume that you have already created a template using for example population_template coming from MRtrix (https://www.mrtrix.org/).
-We provide the python code to coregister each subject Fiber Orientation Distribution (FOD) maps into the template space, saving in the same time the warp files (deformation fields) into a folder named warped_template. All the registered FOD maps need to be saved into a folder named transformed_template.
 
-Please note that the folders warped_template and transformed_template need to be created before launching this python script (the folders should be created in the same directory than the script file). The working directory should also contain the template file, here named template_FOD.nii.gz.
+We provide the Python code to coregister each subject Fiber Orientation Distribution (FOD) maps into the template space. The output will be the transformed FOD maps and the warp files (deformation fields). 
 
-You need to launch:
+This script takes as input all the individual FOD maps. They need to be stored into a Group Directory (we assume that the group directory includes all subjects before TractLearn execution and that the working directory is the location to execute TractLearn). The working directory should contain the template file (here named template_FOD.nii.gz) + Python scripts.
+
+The group directory needs to contain all your subjects as a collection of individual folders. Please also note that in case of case-controlled studies, you need to name your folders using a common prefix for controls (for example Control*) and for patients using a different prefix (eg. Patient*).
+Each folder has to include the directory tractseg_output/TOM_tracking + FOD maps (same name for all FOD maps without prefix identification).
+
 ```
-python 2_Register_fod2template_nomask.py
+python 2_Register_fod2template_nomask.py ./GroupDirectory/ FOD_image_Name
 ```
+You need to add the subjects directory at the end of the line + the FOD image Name (eg. wmfod.mif)
+
+Input: One folder group_directory/ containing the template file + Python scripts and one folder subjects_directory/ containing all individual files (FOD maps +  tractseg_output/TOM_tracking).
+Output: In the folder working_directory/transformed_template, all transformed FOD maps. In the folder working_directory/warp_template, all the warp files.
+
 
 ## Step 2: Track files registration in the common template space
 
-At this step, you need the inverse of the transformation required for images for track files (tck) registration. The following python script will automatically invert all transformations using warpconvert and warpinvert (MRtrix commands). You need to have already created two folders: /transformed_template including the coregistered WM files and /warped_template including the warps files.
+At this step, you need the inverse of the transformation previously required for images, so as to apply on track files (tck) for registration in the same space. 
+The following python script will automatically invert all transformations using warpconvert and warpinvert (MRtrix commands). 
 
 Just launch:
 
@@ -35,13 +44,10 @@ python 3_Invert_warp.py
 
 ## Step 3: Transformation application for all TractSeg bundles
 
-The next step is to use tcktransform command (always coming from MRtrix) on all tck files to coregister all the tck files into a common template space using:
+The next step is to use tcktransform command (always coming from MRtrix) on all tck files to coregister all the tck files into a common template space. Note that you need to add the working directory at the end of the line, for example:
 ```
-python 4_Register_track.py
+python 4_Register_track.py ./GroupDirectory/
 ```
-Note that you need to add the working directory at the end of the line, for example:
-
-python 4_Register_track.py ./MyData/
 
 ## Step 4: Estimation of the different scalar coefficients in the template space
 
@@ -55,11 +61,8 @@ In the initial TractLearn paper, we have proposed to extract 4 biomarkers from e
 FA analysis does firstly require to coregister all individual FA maps (named FA_MNI.nii.gz as it is assumed to be in the MNI space for TractSeg)
 
 ```
-python 5_Register_FA.py
+python 5_Register_FA.py ./GroupDirectory/
 ```
-Keep in this mind for this script to add te working directory at the end, like that:
-
-python 5_FA.py ./MyData/
 
 The following script proposes to automatically convert track files into images files for TW-FOD, TW-FA and AFD using tckmap and afdconnectivity:
 
@@ -77,7 +80,7 @@ python 6_Register_TWI_FOD.py 1
 
 For processing Folder 11 to Folder 20
 
-In case you have for example 35 subjects to postprocess, you need to launch respectively:
+In case you have for example 25 subjects to postprocess, you need to launch respectively:
 
 python 6_Register_TWI_FOD.py 0
 python 6_Register_TWI_FOD.py 1
