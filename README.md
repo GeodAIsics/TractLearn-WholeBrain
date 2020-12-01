@@ -107,10 +107,28 @@ The intersection of all individual masks corresponds to the mask of analysis. 2 
 ```
 python Convert_mask_percentile.py 0
 ```
-Then
+This first script processes bundles by series of 300. If for example you have 1400 bundles (20 subjects with 70 bundles each), you need to launch:
 
 ```
-python python Convert_mask_percentile_phase2.py 0
+python Convert_mask_percentile.py 0
+```
+```
+python Convert_mask_percentile.py 1
+```
+```
+python Convert_mask_percentile.py 2
+```
+```
+python Convert_mask_percentile.py 3
+```
+```
+python Convert_mask_percentile.py 4
+```
+
+The second script doesn't require any additional argument.
+
+```
+python python Convert_mask_percentile_phase2.py
 ```
 You will obtain a new folder named "Stats" where the Z-Score and/or t-test maps will be further saved.
 
