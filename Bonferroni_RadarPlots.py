@@ -76,7 +76,7 @@ data = np.zeros([nb_patient, len(ROI_name), 4])
 
 for k in range(nb_patient):
     for i in range(len(ROI_name)):
-        ima_name = "zscore_" + ROI_name[i] + "_" + name_patient[i] + "_" + name_modality + "_80.nii.gz"
+        ima_name = "zscore_" + ROI_name[i] + "_" + name_patient[k] + "_" + name_modality + "_80.nii.gz"
         print(ima_name)
         IMA_ = nib.load(ima_name).get_data()
         size_track = float(len(np.where(IMA_)[0]))
@@ -88,7 +88,7 @@ for k in range(nb_patient):
         IMA_bin = filter_isolated_cells(IMA_bin, cross)
         # Save the cleaned image
         IMA_nib = nib.Nifti1Image(IMA_bin, aff)
-        nib.save(IMA_nib, "zscore_maskBonf_" + name_patient[k] + "_" + name_modality[i] + ".nii.gz")
+        nib.save(IMA_nib, "zscore_maskBonf_" + ROI_name[i] + "_" + name_patient[k] + "_" + name_modality + ".nii.gz")
         # estimate the different quantitative measures
         # the label function determines the number of lesions
         A, B = label(IMA_bin)
