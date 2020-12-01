@@ -150,13 +150,16 @@ The second case (t-tests) is generally useful when you want to test a pathophysi
 ## First possibility: Estimate z-score maps (individual vs group)
 
 ```
-python z_score_calculation.py
+python z_score_calculation.py Patient_Prefix Control_Prefix Biomarker
 ```
+
+Don't forget to precise the common prefix for patients then controls + the biomarker of your choice (among TW-FOD, TW-FA, AFD and Fractional for FA only)
+
 
 ## Second possibility: Estimate t-test maps (group vs group studies)
 
 ```
-python t_test_calculation.py
+python t_test_calculation.py Patient_Prefix Control_Prefix Biomarker
 ```
 
 ## Step 6: Bonferroni correction for multiple comparison and radar plots generation
