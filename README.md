@@ -96,15 +96,26 @@ python Register_TWI_FOD.py 1
 python Register_TWI_FOD.py 2
 ```
 
-## Invisible step: Mask calculation for all the subjects
+## Step 5: Mask calculation for all subjects
 
 For each bundle, 80% of maximum of the Track Density Imaging intensity is considered to perform a subject mask. The reason was given in the manuscript: Indeed, while the coregistration based on FOD symmetric diffeomorphic has allow to match major brain bundles, we have noticed that cortical variability made more difficult a perfect matching for the entire bundle. Absence of this step could potentially lead to false positive lesions on the bundles boundaries. 
 
 In addition, as TractSeg tends to produce bundle overlaying (i.e some boundaries voxels can be linked to two different brain bundles), using a thresholding has allowed to precisely locate abnormalities.
 
-The intersection of all individual masks corresponds to the mask of analysis.
+The intersection of all individual masks corresponds to the mask of analysis. 2 scripts are successfully needed:
 
-## Step 5: Obtaining your analysis in a Riemaniann framework!
+```
+python Convert_mask_percentile.py 0
+```
+Then
+
+```
+python python Convert_mask_percentile_phase2.py 0
+```
+You will obtain a new folder named "Stats" where the Z-Score and/or t-test maps will be further saved.
+
+
+## Step 6: Obtaining your analysis in a Riemaniann framework!
 
 At this step, you have to make an important choice: you can obtain from TractLearn either Z Score analysis in you want to compare ONE individual versus a group of controls or t-tests analysis if you want to compare two groups together. In both cases you will beneficiate from the high sensitivity of TractLearn to detect voxel abnormalities and its capability to limit false positive findings by taken into account the variability of your control group.
 
