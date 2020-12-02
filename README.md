@@ -130,7 +130,7 @@ The second script doesn't require any additional argument.
 ```
 python python Convert_mask_percentile_phase2.py
 ```
-You will obtain a new folder named "Stats" where the Z-Score and/or t-test maps will be further saved.
+You will obtain a new folder named "stat" where the Z-Score and/or t-test maps will be further saved.
 
 
 ## Step 6: Obtaining your analysis in a Riemaniann framework!
