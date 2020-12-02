@@ -128,7 +128,7 @@ python Convert_mask_percentile.py 4
 The second script doesn't require any additional argument.
 
 ```
-python python Convert_mask_percentile_phase2.py
+python Convert_mask_percentile_phase2.py
 ```
 You will obtain a new folder named "stat" where the Z-Score and/or t-test maps will be further saved.
 
