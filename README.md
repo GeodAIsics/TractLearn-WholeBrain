@@ -31,7 +31,7 @@ Input: One folder group_directory/ containing the template file + Python scripts
 Output: In the folder working_directory/transformed_template, all transformed FOD maps. In the folder working_directory/warp_template, all the warp files.
 
 
-## Step 2: Track files registration in the common template space
+## Step 2: Track files registration in the template space
 
 At this step, you need the inverse of the transformation previously required for images, so as to apply on track files (tck) for registration in the same space. 
 The following python script will automatically invert all transformations using warpconvert and warpinvert (MRtrix commands). 
@@ -42,14 +42,12 @@ Just launch:
 python Invert_warp.py
 ```
 
-## Step 3: Transformation application for all TractSeg bundles
-
 The next step is to use tcktransform command (always coming from MRtrix) on all tck files to coregister all the tck files into a common template space. Note that you need to add the working directory at the end of the line, for example:
 ```
 python Register_track.py ./GroupDirectory/
 ```
 
-## Step 4: Estimation of the different scalar coefficients in the template space
+## Step 3: Estimation of the different scalar coefficients in the template space
 
 In the initial TractLearn paper, we have proposed to extract 4 biomarkers from each patient bundle:
 
@@ -96,7 +94,7 @@ python Register_TWI_FOD.py 1
 python Register_TWI_FOD.py 2
 ```
 
-## Step 5: Mask calculation for all subjects
+## Step 4: Mask calculation for all subjects
 
 For each bundle, 80% of maximum of the Track Density Imaging intensity is considered to perform a subject mask. The reason was given in the manuscript: Indeed, while the coregistration based on FOD symmetric diffeomorphic has allow to match major brain bundles, we have noticed that cortical variability made more difficult a perfect matching for the entire bundle. Absence of this step could potentially lead to false positive lesions on the bundles boundaries. 
 
@@ -133,7 +131,7 @@ python Convert_mask_percentile_phase2.py
 You will obtain a new folder named "stat" where the Z-Score and/or t-test maps will be further saved.
 
 
-## Step 6: Obtaining your analysis in a Riemaniann framework!
+## Step 5: Obtaining your analysis in a Riemaniann framework!
 
 At this step, you have to make an important choice: you can obtain from TractLearn either Z Score analysis in you want to compare ONE individual versus a group of controls or t-tests analysis if you want to compare two groups together. In both cases you will beneficiate from the high sensitivity of TractLearn to detect voxel abnormalities and its capability to limit false positive findings by taken into account the variability of your control group.
 
