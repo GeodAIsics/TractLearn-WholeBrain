@@ -131,7 +131,7 @@ python Convert_mask_percentile_phase2.py
 You will obtain a new folder named "stat" where the Z-Score and/or t-test maps will be further saved.
 
 
-## Step 5: Obtaining your analysis in a Riemaniann framework!
+## Step 5: Obtaining your quantitative analysis using a Riemaniann framework
 
 At this step, you have to make an important choice: you can obtain from TractLearn either Z Score analysis in you want to compare ONE individual versus a group of controls or t-tests analysis if you want to compare two groups together. In both cases you will beneficiate from the high sensitivity of TractLearn to detect voxel abnormalities and its capability to limit false positive findings by taken into account the variability of your control group.
 
