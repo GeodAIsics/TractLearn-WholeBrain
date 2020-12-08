@@ -24,9 +24,9 @@ Each folder has to include the directory tractseg_output/TOM_tracking + FOD maps
 
 We provide on overview about the folders organization:
 
-![alt text](https://geodaisics.files.wordpress.com/2020/12/working_directory.png?resize=219%2C219 "Working directory tree view") 
+![alt text](https://geodaisics.files.wordpress.com/2020/12/working.png?resize=219%2C219 "Working directory tree view") 
 
-![alt text](https://geodaisics.files.wordpress.com/2020/12/groupe_directory.png?resize=219%2C219 "Groupd irectory tree view") 
+![alt text](https://geodaisics.files.wordpress.com/2020/12/group.png?resize=219%2C219 "Group directory tree view") 
 
 ```
 python Register_fod2template.py ./GroupDirectory/ FOD_image_Name
