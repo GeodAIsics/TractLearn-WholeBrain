@@ -22,6 +22,12 @@ This script takes as input all the individual FOD maps. They need to be stored i
 The group directory needs to contain all your subjects as a collection of individual folders. Please also note that in case of case-controlled studies, you need to name your folders using a common prefix for controls (for example Control*) and for patients using a different prefix (eg. Patient*).
 Each folder has to include the directory tractseg_output/TOM_tracking + FOD maps (same name for all FOD maps without prefix identification).
 
+We provide on overview about the folders organization:
+
+![alt text](https://geodaisics.files.wordpress.com/2020/12/working_directory.png?resize=219%2C219 "Working directory tree view") 
+
+![alt text](https://geodaisics.files.wordpress.com/2020/12/groupe_directory.png?resize=219%2C219 "Groupd irectory tree view") 
+
 ```
 python Register_fod2template.py ./GroupDirectory/ FOD_image_Name
 ```
