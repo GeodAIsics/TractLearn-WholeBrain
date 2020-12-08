@@ -28,10 +28,11 @@ We provide on overview about the folders organization:
 
 ![alt text](https://geodaisics.files.wordpress.com/2020/12/group.png "Group directory tree view") 
 
+You need to add the group directory at the end of the line + the FOD image Name (eg. wmfod.mif)
+
 ```
 python Register_fod2template.py ./GroupDirectory/ FOD_image_Name
 ```
-You need to add the subjects directory at the end of the line + the FOD image Name (eg. wmfod.mif)
 
 Input: One folder group_directory/ containing the template file + Python scripts and one folder subjects_directory/ containing all individual files (FOD maps +  tractseg_output/TOM_tracking).
 Output: In the folder working_directory/transformed_template, all transformed FOD maps. In the folder working_directory/warp_template, all the warp files.
@@ -74,7 +75,7 @@ The following script proposes to automatically convert track files into images f
 python Register_TWI_FOD.py
 ```
 
-As the ouput will generate a high number of files, we propose to postprocess individuals by group of 10 using this nomenclature:
+As the output will generate a high number of files, we propose to postprocess individuals by group of 10 using this nomenclature:
 
 ```
 python Register_TWI_FOD.py 0
