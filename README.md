@@ -17,25 +17,25 @@ Here we assume that you have already created a template using for example popula
 
 We provide the Python code to coregister each subject Fiber Orientation Distribution (FOD) maps into the template space. The output will be the transformed FOD maps and the warp files (deformation fields). 
 
-This script takes as input all the individual FOD maps. They need to be stored into a Group Directory (we assume that the group directory includes all subjects before TractLearn execution and that the working directory is the location to execute TractLearn). The working directory should contain the template file (here named template_FOD.nii.gz) + Python scripts.
+This script takes as input all the individual FOD maps. They need to be stored into a Data Directory (we assume that the Data directory includes all subjects before TractLearn execution and that the working directory is the location to execute TractLearn). The TractLearn directory should contain the template file (here named template_FOD.nii.gz) + Python scripts.
 
-The group directory needs to contain all your subjects as a collection of individual folders. Please also note that in case of case-controlled studies, you need to name your folders using a common prefix for controls (for example Control*) and for patients using a different prefix (eg. Patient*).
+The Data directory needs to contain all your subjects as a collection of individual folders. Please also note that in case of case-controlled studies, you need to name your folders using a common prefix for controls (for example Control*) and for patients using a different prefix (eg. Patient*).
 Each folder has to include the directory tractseg_output/TOM_tracking + FOD maps (same name for all FOD maps without prefix identification).
 
 We provide on overview about the folders organization:
 
-![alt text](https://geodaisics.files.wordpress.com/2020/12/working.png "Working directory tree view") 
+![alt text](https://geodaisics.files.wordpress.com/2020/12/tractlearn.png "TractLearn directory tree view") 
 
-![alt text](https://geodaisics.files.wordpress.com/2020/12/group.png "Group directory tree view") 
+![alt text](https://geodaisics.files.wordpress.com/2020/12/data.png "Data directory tree view") 
 
-You need to add the group directory at the end of the line + the FOD image Name (eg. wmfod.mif)
+You need to add the Data directory at the end of the line + the FOD image Name (eg. wmfod.mif)
 
 ```
-python Register_fod2template.py ./GroupDirectory/ FOD_image_Name
+python Register_fod2template.py ./DataDirectory/ FOD_image_Name
 ```
 
-Input: One folder group_directory/ containing the template file + Python scripts and one folder subjects_directory/ containing all individual files (FOD maps +  tractseg_output/TOM_tracking).
-Output: In the folder working_directory/transformed_template, all transformed FOD maps. In the folder working_directory/warp_template, all the warp files.
+Input: One folder Data_directory/ containing the template file + Python scripts and one folder Data_directory/ containing all individual files (FOD maps +  tractseg_output/TOM_tracking).
+Output: In the folder TractLearn_directory/transformed_template, all transformed FOD maps. In the folder TractLearn_directory/warp_template, all the warp files.
 
 
 ## Step 2: Track files registration in the template space
@@ -49,9 +49,9 @@ Just launch:
 python Invert_warp.py
 ```
 
-The next step is to use tcktransform command (always coming from MRtrix) on all tck files to coregister all the tck files into a common template space. Note that you need to add the working directory at the end of the line, for example:
+The next step is to use tcktransform command (always coming from MRtrix) on all tck files to coregister all the tck files into a common template space. Note that you need to add the Data directory at the end of the line, for example:
 ```
-python Register_track.py ./GroupDirectory/
+python Register_track.py ./DataDirectory/
 ```
 
 ## Step 3: Estimation of the different scalar coefficients in the template space
@@ -66,7 +66,7 @@ In the initial TractLearn paper, we have proposed to extract 4 biomarkers from e
 FA analysis does firstly require to coregister all individual FA maps (named FA_MNI.nii.gz as it is assumed to be in the MNI space for TractSeg)
 
 ```
-python Register_FA.py ./GroupDirectory/
+python Register_FA.py ./DataDirectory/
 ```
 
 The following script proposes to automatically convert track files into images files for TW-FOD, TW-FA and AFD using tckmap and afdconnectivity:
@@ -135,7 +135,7 @@ The second script doesn't require any additional argument.
 ```
 python Convert_mask_percentile_phase2.py
 ```
-You will obtain a new folder named "stat" where the Z-Score and/or t-test maps will be further saved.
+You will obtain a new subfolder named "stat" where the Z-Score and/or t-test maps will be further saved.
 
 
 ## Step 5: Obtaining your quantitative analysis using a Riemaniann framework
