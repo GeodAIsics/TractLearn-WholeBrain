@@ -152,6 +152,8 @@ Obtaining separate analysis for each individual can for example help to identify
 
 The second case (t-tests) is generally useful when you want to test a pathophysiological hypothesis at the group level with homogeneous population
 
+Note that in both cases you need The Nadaraya-Watson kernel script (NW_regression.py) at the same folder level that either Z-Score or t-tests Python scripts.
+
 ## First possibility: Estimate z-score maps (individual vs group)
 
 ```
