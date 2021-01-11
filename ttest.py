@@ -110,18 +110,18 @@ for track in Track_name:
     	Mean1 = np.mean(Error_loo,axis=0)
     	Std1 = np.std(Error_loo,axis=0)
     	Mean_error_pat = np.mean(Error_pat,axis=0)
-        ttest , pval = ttest_ind(Error_loo,Mean_error_pat)        
+    	ttest , pval = ttest_ind(Error_loo,Mean_error_pat)
     	IMA = nib.load(Ima_pat[0])
-    	aff= IMA.get_affine()   
-        #save pvalue map
-        pval[np.where(np.isnan(pval)) ] = -1
-        IMA_ = np.zeros(IMA.get_data().shape)
-        IMA_[ind_mean] = pval
-        IMA_nib = nib.Nifti1Image(IMA_,aff)
-        nib.save(IMA_nib,"stat/pval_"+track+"_"+modality+"_80.nii.gz")
-        #save ttest statistic map
-        ttest[np.where(np.isnan(pval)) ] = -50
-        IMA_ = np.zeros(IMA.get_data().shape)
-        IMA_[ind_mean] = ttest
-        IMA_nib = nib.Nifti1Image(IMA_,aff)
-        nib.save(IMA_nib,"stat/ttest_"+track+"_"+modality+"_80.nii.gz")
+    	aff= IMA.get_affine()
+    	#save pvalue map
+    	pval[np.where(np.isnan(pval)) ] = -1
+    	IMA_ = np.zeros(IMA.get_data().shape)
+    	IMA_[ind_mean] = pval
+    	IMA_nib = nib.Nifti1Image(IMA_,aff)
+    	nib.save(IMA_nib,"stat/pval_"+track+"_"+modality+"_80.nii.gz")
+    	#save ttest statistic map
+    	ttest[np.where(np.isnan(pval)) ] = -50
+    	IMA_ = np.zeros(IMA.get_data().shape)
+    	IMA_[ind_mean] = ttest
+    	IMA_nib = nib.Nifti1Image(IMA_,aff)
+    	nib.save(IMA_nib,"stat/ttest_"+track+"_"+modality+"_80.nii.gz")
