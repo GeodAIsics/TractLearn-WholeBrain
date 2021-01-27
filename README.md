@@ -168,12 +168,18 @@ Don't forget to precise the common prefix for patients then controls + the bioma
 ```
 python ttest.py Patient_Prefix Control_Prefix Biomarker
 ```
-
-## Step 6: Bonferroni correction for multiple comparison and radar plots generation
+This script will provide the p-values. The following script aims at creating the lesions maps in the template space + Radar plots to provide an overview of the number of altered voxels:
 
 ```
-python Bonferroni_RadarPlots.py
+python RadarPlots_ttest.py
 ```
+We also provide an alternative version for the last script providing a Bonferroni correction for multiple comparison. Please note that correction for mulitple comparison is not really adapted for applying on TractLearn, as we provide a global statistical test for which voxels are not analyzed independently. However, as the literature is still sparse on this subject in medicine, reviewers can ask for correction.
+
+```
+python Bonferroni_RadarPlots_ttest.py
+```
+
+
 
 
 
