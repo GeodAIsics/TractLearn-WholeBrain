@@ -173,7 +173,7 @@ This script will provide the p-values. The following script aims at creating the
 ```
 python RadarPlots_ttest.py
 ```
-We also provide an alternative version for the last script providing a Bonferroni correction for multiple comparison. Please note that correction for mulitple comparison is not really adapted for applying on TractLearn, as we provide a global statistical test for which voxels are not analyzed independently. However, as the literature is still sparse on this subject in medicine, reviewers can ask for correction.
+We also provide an alternative version for the last script providing a Bonferroni correction for multiple comparison. Please note that correction for multiple comparison is not adapted for applying on TractLearn, which provides a global statistical test for which voxels are not analyzed independently. However, as the literature is still sparse on this subject in medicine, reviewers can ask for correction.
 
 ```
 python Bonferroni_RadarPlots_ttest.py
