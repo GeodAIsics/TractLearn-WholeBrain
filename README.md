@@ -56,7 +56,7 @@ python Register_track.py ./DataDirectory/
 
 ## Step 3: Estimation of the different scalar coefficients in the template space
 
-In the initial TractLearn paper, we have proposed to extract 4 biomarkers from each patient bundle:
+In the initial TractLearn paper, we have proposed to extract 4 biomarkers from each brain bundle:
 
 1/The track-weighted contrast based on FOD amplitude (TW-FOD)
 2/The track-weighted contrast based on FA amplitude (TW-FA)
@@ -64,6 +64,8 @@ In the initial TractLearn paper, we have proposed to extract 4 biomarkers from e
 4/Apparent Fiber Density (AFD) coefficient) 
 
 FA analysis does firstly require to coregister all individual FA maps (named FA_MNI.nii.gz as it is assumed to be in the MNI space for TractSeg)
+Note that this framework can easily be extended to other metrics.
+
 
 ```
 python Register_FA.py ./DataDirectory/
