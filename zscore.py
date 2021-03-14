@@ -67,7 +67,7 @@ for track in Track_name:
     #List to save the residuals of the controls
     error_loo = []
     #List to save the residuals of the patients
-    error_mtbi =[]
+    error_pat =[]
     for train_index, test_index in loo.split(X):
         print("TRAIN:", train_index, "TEST:", test_index)
         X_train, X_test = X[train_index], X[test_index]
