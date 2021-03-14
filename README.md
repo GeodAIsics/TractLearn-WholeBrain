@@ -162,7 +162,7 @@ Note that in both cases you need The Nadaraya-Watson kernel script (NW_regressio
 python zscore.py Patient_Prefix Control_Prefix Biomarker
 ```
 
-Don't forget to precise the common prefix for patients then controls + the biomarker of your choice (among TW-FOD, TW-FA, AFD and Fractional for FA only)
+Don't forget to precise the common prefix for patients then controls + the biomarker of your choice (among TW_FOD, TW_FA, AFD and Fractional for FA only)
 
 
 ## Second possibility: Estimate t-test maps (group vs group studies)
