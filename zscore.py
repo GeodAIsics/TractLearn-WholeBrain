@@ -33,7 +33,7 @@ for track in Track_name:
     Ima1.sort()
     name_Ima1 = [i.split("/")[-1].split(track)[0] for i in Ima1 ]
     print(name_Ima1)
-    ima_index = nib.load(glob("stat/" + track+"*TDI*Thr80.nii")[0]).get_data()
+    ima_index = nib.load(glob("stat/" + track+"*Mean_TDI*.nii")[0]).get_data()
     ind_mean = np.where(ima_index)
     Data1 = []
     for i in Ima1:
