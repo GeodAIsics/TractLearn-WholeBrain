@@ -159,16 +159,16 @@ Note that in both cases you need The Nadaraya-Watson kernel script (NW_regressio
 ## First possibility: Estimate z-score maps (individual vs group)
 
 ```
-python zscore.py Patient_Prefix Control_Prefix Biomarker
+python zscore.py Control_Prefix Patient_Prefix Biomarker
 ```
 
-Don't forget to precise the common prefix for patients then controls + the biomarker of your choice (among TW_FOD, TW_FA, AFD and Fractional for FA only)
+Don't forget to precise the common prefix for controls then patients + the biomarker of your choice (among TW_FOD, TW_FA, AFD and Fractional for FA only)
 
 
 ## Second possibility: Estimate t-test maps (group vs group studies)
 
 ```
-python ttest.py Patient_Prefix Control_Prefix Biomarker
+python ttest.py Control_Prefix Patient_Prefix Biomarker
 ```
 This script will provide the p-values. The following script aims at creating the lesions maps in the template space + Radar plots to provide an overview of the number of altered voxels:
 
